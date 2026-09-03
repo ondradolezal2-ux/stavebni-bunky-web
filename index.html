@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zámečnictví Došel | Kompletní Návrh vč. Konfigurátoru</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f97316', 
+                        primaryHover: '#ea580c', 
+                        dark: '#1e293b', 
+                        darker: '#0f172a', 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .page-section { display: none; min-height: 70vh; }
+        .page-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-link.active { border-bottom: 2px solid #f97316; color: #1e293b; }
+        
+        /* Konfigurator styly */
+        .conf-step { display: none; }
+        .conf-step.active { display: block; animation: fadeIn 0.4s; }
+        .conf-option { cursor: pointer; transition: all 0.2s; }
+        .conf-option:hover { border-color: #f97316; background-color: #fff7ed; }
+        .conf-option.selected { border-color: #f97316; background-color: #fff7ed; border-width: 2px; }
+        .conf-checkbox.selected { background-color: #f97316; color: white; border-color: #f97316; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans flex flex-col min-h-screen">
+
+    <!-- Horní lišta -->
+    <div class="bg-darker text-gray-300 py-2 text-sm hidden sm:block">
+        <div class="container mx-auto px-4 flex justify-between items-center max-w-6xl">
+            <div class="flex space-x-6">
+                <span><i class="fa-solid fa-envelope mr-2 text-primary"></i> info@stavebni-bunky.cz</span>
+                <span><i class="fa-solid fa-location-dot mr-2 text-primary"></i> Všestary 30, Královéhradecký kraj</span>
+            </div>
+            <div>
+                <a href="#kontakt" onclick="showPage('kontakt')" class="font-bold text-white hover:text-primary transition"><i class="fa-solid fa-phone mr-2 text-primary"></i> +420 602 583 199</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigace -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center max-w-6xl">
+            <a href="#uvod" onclick="showPage('uvod')" class="text-2xl font-black text-dark tracking-tighter cursor-pointer">
+                DOŠEL<span class="text-primary">.</span>
+            </a>
+            <div class="hidden md:flex space-x-8 font-medium text-gray-600" id="nav-links">
+                <a href="#uvod" onclick="showPage('uvod')" data-target="uvod" class="nav-link hover:text-primary transition active">Úvod</a>
+                <a href="#bunky" onclick="showPage('bunky')" data-target="bunky" class="nav-link hover:text-primary transition">Stavební buňky</a>
+                <a href="#zamecnictvi" onclick="showPage('zamecnictvi')" data-target="zamecnictvi" class="nav-link hover:text-primary transition">Zámečnictví</a>
+                <a href="#realizace" onclick="showPage('realizace')" data-target="realizace" class="nav-link hover:text-primary transition">Realizace</a>
+                <a href="#onas" onclick="showPage('onas')" data-target="onas" class="nav-link hover:text-primary transition">O nás</a>
+                <a href="#kontakt" onclick="showPage('kontakt')" data-target="kontakt" class="nav-link hover:text-primary transition">Kontakt</a>
+            </div>
+            <div>
+                <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-6 py-2 rounded font-bold transition shadow-lg shadow-orange-500/30 flex items-center">
+                    <i class="fa-solid fa-calculator mr-2"></i> Konfigurátor
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT WRAPPER -->
+    <main class="flex-grow">
+        
+        <!-- ================= STRÁNKA: ÚVOD ================= -->
+        <div id="page-uvod" class="page-section active">
+            <!-- Hero Sekce -->
+            <header class="relative bg-dark text-white">
+                <div class="absolute inset-0 z-0 opacity-40 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1541888081600-0199185e7836?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-darker to-transparent z-0"></div>
+                
+                <div class="container mx-auto px-4 py-32 md:py-48 relative z-10 max-w-6xl">
+                    <div class="max-w-2xl">
+                        <span class="inline-block py-1 px-3 rounded bg-gray-800 border border-primary text-sm text-primary font-bold mb-4 uppercase tracking-wider">Výroba od roku 1995</span>
+                        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Spolehlivé stavební buňky, které vydrží.
+                        </h1>
+                        <p class="text-xl text-gray-300 mb-10 leading-relaxed">
+                            Od základních šaten až po zateplené kanceláře. Vyrábíme na míru v ČR a garantujeme kvalitu od roku 1995.
+                        </p>
+                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded font-bold text-lg text-center transition flex items-center justify-center shadow-lg">
+                                Sestavit buňku online
+                            </a>
+                            <a href="#bunky" onclick="showPage('bunky')" class="bg-white hover:bg-gray-100 text-dark px-8 py-4 rounded font-bold text-lg text-center transition">
+                                Prohlédnout typová řešení
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Proč my sekce -->
+            <section class="py-16 bg-white -mt-10 relative z-20">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 bg-white rounded-xl shadow-xl p-8 border border-gray-100">
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto bg-orange-100 text-primary rounded-full flex items-center justify-center text-2xl mb-4">
+                                <i class="fa-solid fa-hammer"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Česká výroba</h3>
+                            <p class="text-sm text-gray-500">Žádní překupníci. Vše svařujeme a montujeme v našich halách ve Všestarech.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto bg-orange-100 text-primary rounded-full flex items-center justify-center text-2xl mb-4">
+                                <i class="fa-solid fa-temperature-half"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">I do mrazu</h3>
+                            <p class="text-sm text-gray-500">Naše buňky jsou zateplené (PUR/vata) a připravené pro celoroční provoz.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto bg-orange-100 text-primary rounded-full flex items-center justify-center text-2xl mb-4">
+                                <i class="fa-solid fa-ruler-combined"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Vyrobíme cokoliv</h3>
+                            <p class="text-sm text-gray-500">Potřebujete atypické rozměry, mříže nebo umývárnu? Přizpůsobíme detail.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto bg-orange-100 text-primary rounded-full flex items-center justify-center text-2xl mb-4">
+                                <i class="fa-solid fa-truck-fast"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Doprava zajištěna</h3>
+                            <p class="text-sm text-gray-500">Hotovou buňku vám dovezeme až na stavbu a případně poradíme s usazením.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ================= STRÁNKA: STAVEBNÍ BUŇKY ================= -->
+        <div id="page-bunky" class="page-section">
+            <header class="bg-dark text-white py-20">
+                <div class="container mx-auto px-4 text-center max-w-4xl">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Nejčastější řešení pro vaše stavby</h1>
+                    <p class="text-xl text-gray-400">Standardní řešení i zakázková výroba od základního rámu až po vybavení interiéru.</p>
+                </div>
+            </header>
+
+            <section class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                            <div class="h-64 bg-gray-300 overflow-hidden"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&w=600&q=80" alt="Kancelář" class="w-full h-full object-cover"></div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-dark mb-2">Stavební kancelář</h3>
+                                <p class="text-gray-500 text-sm mb-4">Komfortní zázemí pro stavbyvedoucí. Včetně pracovních stolů, židlí, skříněk a elektroinstalace. Zapojíte a pracujete.</p>
+                                <div class="text-right border-t border-gray-100 pt-4 font-bold text-xl">139 000 Kč <span class="text-xs font-normal text-gray-400">bez DPH</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl overflow-hidden shadow-xl border-2 border-primary relative">
+                            <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full z-10">Bestseller</div>
+                            <div class="h-64 bg-gray-300 overflow-hidden"><img src="https://images.unsplash.com/photo-1595844730298-b960fad973d4?ixlib=rb-4.0.3&w=600&q=80" alt="Šatna" class="w-full h-full object-cover"></div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-dark mb-2">Šatna a denní místnost</h3>
+                                <p class="text-gray-500 text-sm mb-4">Zázemí pro vaše lidi. Dvojskříňky, odolné lavičky, omyvatelné povrchy a výkonné vytápění pro sušení oděvů.</p>
+                                <div class="text-right border-t border-gray-100 pt-4 font-bold text-xl">129 400 Kč <span class="text-xs font-normal text-gray-400">bez DPH</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                            <div class="h-64 bg-gray-300 overflow-hidden"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&w=600&q=80" alt="Sklad" class="w-full h-full object-cover"></div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-dark mb-2">Ocelový skladový kontejner</h3>
+                                <p class="text-gray-500 text-sm mb-4">Bytelné a bezpečné řešení pro uložení drahého nářadí a materiálu přímo na staveništi. Uzamykatelné a zesílené.</p>
+                                <div class="text-right border-t border-gray-100 pt-4 font-bold text-xl">112 200 Kč <span class="text-xs font-normal text-gray-400">bez DPH</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ================= STRÁNKA: ZÁMEČNICTVÍ ================= -->
+        <div id="page-zamecnictvi" class="page-section">
+            <header class="bg-dark text-white py-20">
+                <div class="container mx-auto px-4 text-center max-w-4xl">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Nejsme jen buňky.</h1>
+                    <p class="text-xl text-gray-400">Zvládneme i poctivé zámečnické práce přesně podle nákresů.</p>
+                </div>
+            </header>
+            
+            <section class="py-16 bg-white">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+                        <div>
+                            <h2 class="text-3xl font-bold mb-4">Co všechno pro vás vyrobíme?</h2>
+                            <p class="text-gray-600 mb-6">Naše plně vybavená dílna si poradí se stavebním i strojním zámečnictvím. Vyrábíme ocelové konstrukce přesně podle vašich nákresů a požadavků.</p>
+                            <ul class="space-y-3 font-medium text-dark">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-primary mr-3"></i> Ocelové přístřešky a zastřešení</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-primary mr-3"></i> Výroba a montáž balkonů</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-primary mr-3"></i> Vjezdové brány a ploty</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-primary mr-3"></i> Bezpečnostní mříže do oken i dveří</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-primary mr-3"></i> Interiérová i exteriérová schodiště</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-primary mr-3"></i> Ocelová i nerezová zábradlí</li>
+                            </ul>
+                            <a href="#kontakt" onclick="showPage('kontakt')" class="inline-block mt-8 bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold transition">Poptat zámečnické práce</a>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <img src="https://images.unsplash.com/photo-1504917595217-d4bf59898f6f?ixlib=rb-4.0.3&w=400&q=80" alt="Zámečnictví" class="rounded-lg h-48 w-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1620316654929-c09a89c927f8?ixlib=rb-4.0.3&w=400&q=80" alt="Sváření" class="rounded-lg h-48 w-full object-cover mt-8">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ================= STRÁNKA: O NÁS ================= -->
+        <div id="page-onas" class="page-section">
+            <header class="bg-dark text-white py-20">
+                <div class="container mx-auto px-4 text-center max-w-4xl">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Poctivé řemeslo má jméno.</h1>
+                    <p class="text-xl text-gray-400">Za kvalitou každého sváru si osobně stojíme.</p>
+                </div>
+            </header>
+
+            <section class="py-16 bg-white">
+                <div class="container mx-auto px-4 max-w-4xl text-center">
+                    <h2 class="text-3xl font-bold mb-8">Michal Došel – Zakladatel</h2>
+                    <p class="text-lg text-gray-600 mb-6 leading-relaxed italic border-l-4 border-primary pl-6 text-left">
+                        "Začínali jsme v roce 1995. Za tu dobu se ve stavebnictví změnilo mnohé, ale poptávka po poctivé práci zůstala. Dnes za námi stojí přes 4 800 vyrobených buněk a konstrukcí. Zákazník u nás nekomunikuje se strojem nebo překupníkem, ale jedná přímo s výrobou. A to je rozdíl, který poznáte."
+                    </p>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center border-t border-gray-100 pt-12 mt-12">
+                        <div>
+                            <div class="text-4xl font-black text-primary mb-2">1995</div>
+                            <div class="text-gray-500 font-medium uppercase text-sm">Rok založení</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-black text-primary mb-2">4800+</div>
+                            <div class="text-gray-500 font-medium uppercase text-sm">Spokojených klientů</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-black text-primary mb-2">100%</div>
+                            <div class="text-gray-500 font-medium uppercase text-sm">Česká výroba</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-black text-primary mb-2">165+</div>
+                            <div class="text-gray-500 font-medium uppercase text-sm">Doporučení</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ================= STRÁNKA: KONFIGURÁTOR (NOVÉ) ================= -->
+        <div id="page-konfigurator" class="page-section">
+            <header class="bg-dark text-white py-12">
+                <div class="container mx-auto px-4 text-center max-w-4xl">
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2">Sestavte si buňku podle svých představ</h1>
+                    <p class="text-lg text-gray-400">Odpovězte na pár rychlých otázek a získejte nezávaznou kalkulaci na míru.</p>
+                </div>
+            </header>
+
+            <section class="py-12 bg-gray-50 min-h-[500px]">
+                <div class="container mx-auto px-4 max-w-4xl">
+                    
+                    <!-- Progress Bar -->
+                    <div class="mb-10">
+                        <div class="flex justify-between text-xs font-bold text-gray-400 mb-2 px-2" id="conf-progress-text">
+                            <span class="text-primary">1. Účel</span>
+                            <span>2. Rozměry</span>
+                            <span>3. Zateplení</span>
+                            <span>4. Výbava</span>
+                            <span>5. Hotovo</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-primary h-2 rounded-full transition-all duration-500" id="conf-progress-bar" style="width: 20%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Formulář konfigurátoru -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 relative">
+                        
+                        <!-- Krok 1 -->
+                        <div id="step-1" class="conf-step active">
+                            <h2 class="text-2xl font-bold mb-6 text-center">K čemu bude buňka primárně sloužit?</h2>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div class="conf-option border border-gray-200 rounded-lg p-4 text-center" onclick="selectSingleOption('step-1', this)">
+                                    <i class="fa-solid fa-briefcase text-3xl text-gray-400 mb-3"></i><br>
+                                    <span class="font-bold text-dark">Kancelář / Zázemí</span>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-4 text-center" onclick="selectSingleOption('step-1', this)">
+                                    <i class="fa-solid fa-shirt text-3xl text-gray-400 mb-3"></i><br>
+                                    <span class="font-bold text-dark">Šatna / Denní místnost</span>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-4 text-center" onclick="selectSingleOption('step-1', this)">
+                                    <i class="fa-solid fa-boxes-stacked text-3xl text-gray-400 mb-3"></i><br>
+                                    <span class="font-bold text-dark">Sklad materiálu</span>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-4 text-center" onclick="selectSingleOption('step-1', this)">
+                                    <i class="fa-solid fa-restroom text-3xl text-gray-400 mb-3"></i><br>
+                                    <span class="font-bold text-dark">Sanitární (WC, sprchy)</span>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-4 text-center" onclick="selectSingleOption('step-1', this)">
+                                    <i class="fa-solid fa-building-shield text-3xl text-gray-400 mb-3"></i><br>
+                                    <span class="font-bold text-dark">Vrátnice / Strážnice</span>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-4 text-center" onclick="selectSingleOption('step-1', this)">
+                                    <i class="fa-solid fa-question text-3xl text-gray-400 mb-3"></i><br>
+                                    <span class="font-bold text-dark">Jiný / Atypický účel</span>
+                                </div>
+                            </div>
+                            <div class="mt-8 text-right">
+                                <button onclick="nextStep(2)" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold transition">Pokračovat <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Krok 2 -->
+                        <div id="step-2" class="conf-step">
+                            <h2 class="text-2xl font-bold mb-6 text-center">Jaký prostor potřebujete?</h2>
+                            <div class="space-y-4">
+                                <div class="conf-option border border-gray-200 rounded-lg p-5 flex items-center justify-between" onclick="selectSingleOption('step-2', this)">
+                                    <div>
+                                        <div class="font-bold text-lg text-dark">Standardní rozměr</div>
+                                        <div class="text-gray-500 text-sm">6 x 2,4 metru (Nejrychlejší dodání)</div>
+                                    </div>
+                                    <i class="fa-solid fa-ruler text-2xl text-gray-300"></i>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-5 flex items-center justify-between" onclick="selectSingleOption('step-2', this)">
+                                    <div>
+                                        <div class="font-bold text-lg text-dark">Menší provedení</div>
+                                        <div class="text-gray-500 text-sm">Např. 3 x 2,4 metru nebo vrátnice 1,5 x 1,5m</div>
+                                    </div>
+                                    <i class="fa-solid fa-down-left-and-up-right-to-center text-2xl text-gray-300"></i>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-5 flex items-center justify-between" onclick="selectSingleOption('step-2', this)">
+                                    <div>
+                                        <div class="font-bold text-lg text-dark">Větší provedení / Více modulů</div>
+                                        <div class="text-gray-500 text-sm">Sestava propojených buněk (modulární stavba)</div>
+                                    </div>
+                                    <i class="fa-solid fa-cubes text-2xl text-gray-300"></i>
+                                </div>
+                            </div>
+                            <div class="mt-8 flex justify-between">
+                                <button onclick="nextStep(1)" class="text-gray-500 hover:text-dark font-bold"><i class="fa-solid fa-arrow-left mr-2"></i> Zpět</button>
+                                <button onclick="nextStep(3)" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold transition">Pokračovat <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Krok 3 -->
+                        <div id="step-3" class="conf-step">
+                            <h2 class="text-2xl font-bold mb-6 text-center">Budete buňku využívat celoročně?</h2>
+                            <div class="space-y-4">
+                                <div class="conf-option border border-gray-200 rounded-lg p-5 flex items-center justify-between" onclick="selectSingleOption('step-3', this)">
+                                    <div>
+                                        <div class="font-bold text-lg text-dark">Ano, chci plnohodnotné zateplení</div>
+                                        <div class="text-gray-500 text-sm">Vhodné do mrazů i letních veder (izolace PUR/Vata)</div>
+                                    </div>
+                                    <i class="fa-solid fa-snowflake text-2xl text-gray-300"></i>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-5 flex items-center justify-between" onclick="selectSingleOption('step-3', this)">
+                                    <div>
+                                        <div class="font-bold text-lg text-dark">Ne, stačí mi základní letní provedení</div>
+                                        <div class="text-gray-500 text-sm">Pro sezónní použití</div>
+                                    </div>
+                                    <i class="fa-solid fa-sun text-2xl text-gray-300"></i>
+                                </div>
+                                <div class="conf-option border border-gray-200 rounded-lg p-5 flex items-center justify-between" onclick="selectSingleOption('step-3', this)">
+                                    <div>
+                                        <div class="font-bold text-lg text-dark">Potřebuji jen nezateplený sklad</div>
+                                        <div class="text-gray-500 text-sm">Odolný plechový plášť bez izolace</div>
+                                    </div>
+                                    <i class="fa-solid fa-box text-2xl text-gray-300"></i>
+                                </div>
+                            </div>
+                            <div class="mt-8 flex justify-between">
+                                <button onclick="nextStep(2)" class="text-gray-500 hover:text-dark font-bold"><i class="fa-solid fa-arrow-left mr-2"></i> Zpět</button>
+                                <button onclick="nextStep(4)" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold transition">Pokračovat <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Krok 4 -->
+                        <div id="step-4" class="conf-step">
+                            <h2 class="text-2xl font-bold mb-2 text-center">Co by v buňce nemělo chybět?</h2>
+                            <p class="text-center text-gray-500 mb-6">Zaškrtněte vše, co potřebujete (více možností)</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="conf-option conf-checkbox border border-gray-200 rounded-lg p-4 flex items-center" onclick="toggleMultiOption(this)">
+                                    <div class="w-6 h-6 border-2 border-gray-300 rounded mr-4 flex items-center justify-center check-icon"><i class="fa-solid fa-check hidden"></i></div>
+                                    <span class="font-bold text-dark">Kompletní elektroinstalace</span>
+                                </div>
+                                <div class="conf-option conf-checkbox border border-gray-200 rounded-lg p-4 flex items-center" onclick="toggleMultiOption(this)">
+                                    <div class="w-6 h-6 border-2 border-gray-300 rounded mr-4 flex items-center justify-center check-icon"><i class="fa-solid fa-check hidden"></i></div>
+                                    <span class="font-bold text-dark">Bezpečnostní mříže</span>
+                                </div>
+                                <div class="conf-option conf-checkbox border border-gray-200 rounded-lg p-4 flex items-center" onclick="toggleMultiOption(this)">
+                                    <div class="w-6 h-6 border-2 border-gray-300 rounded mr-4 flex items-center justify-center check-icon"><i class="fa-solid fa-check hidden"></i></div>
+                                    <span class="font-bold text-dark">Základní nábytek</span>
+                                </div>
+                                <div class="conf-option conf-checkbox border border-gray-200 rounded-lg p-4 flex items-center" onclick="toggleMultiOption(this)">
+                                    <div class="w-6 h-6 border-2 border-gray-300 rounded mr-4 flex items-center justify-center check-icon"><i class="fa-solid fa-check hidden"></i></div>
+                                    <span class="font-bold text-dark">Vytápění (Přímotop)</span>
+                                </div>
+                                <div class="conf-option conf-checkbox border border-gray-200 rounded-lg p-4 flex items-center" onclick="toggleMultiOption(this)">
+                                    <div class="w-6 h-6 border-2 border-gray-300 rounded mr-4 flex items-center justify-center check-icon"><i class="fa-solid fa-check hidden"></i></div>
+                                    <span class="font-bold text-dark">Rozvody vody (Dřez/WC)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 flex justify-between">
+                                <button onclick="nextStep(3)" class="text-gray-500 hover:text-dark font-bold"><i class="fa-solid fa-arrow-left mr-2"></i> Zpět</button>
+                                <button onclick="nextStep(5)" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold transition">Dokončit návrh <i class="fa-solid fa-check ml-2"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Krok 5: Lead Gen -->
+                        <div id="step-5" class="conf-step text-center py-8">
+                            <div class="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold mb-4">Váš návrh je připraven k nacenění!</h2>
+                            <p class="text-gray-600 mb-8 max-w-lg mx-auto">Abychom vám mohli poslat nezávaznou kalkulaci na míru k vámi sestavené buňce, zadejte prosím své kontaktní údaje níže.</p>
+                            
+                            <form class="max-w-md mx-auto text-left">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Jméno nebo Firma</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">E-mail pro zaslání kalkulace</label>
+                                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                                </div>
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Telefon (pro případné doplňující dotazy)</label>
+                                    <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                                </div>
+                                <button type="button" onclick="alert('Demo: Zde by se odeslal email firmě Došel s poptávkou.')" class="w-full bg-dark hover:bg-darker text-white font-bold py-4 px-4 rounded-lg transition shadow-lg text-lg">
+                                    Odeslat k bezplatnému nacenění
+                                </button>
+                                <p class="text-xs text-center text-gray-400 mt-4"><i class="fa-solid fa-lock"></i> Vaše údaje jsou u nás v bezpečí a slouží pouze pro zpracování nabídky.</p>
+                            </form>
+                            
+                            <div class="mt-8">
+                                <button onclick="nextStep(1)" class="text-gray-400 hover:text-gray-600 text-sm underline">Začít znovu od začátku</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Ostatní stránky zkráceny pro tento úkol, ale kontaktní zůstává stejná -->
+        <div id="page-kontakt" class="page-section">
+            <header class="bg-dark text-white py-20">
+                <div class="container mx-auto px-4 text-center max-w-4xl">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Kontaktujte nás</h1>
+                    <p class="text-xl text-gray-400">Rádi zodpovíme vaše dotazy nebo připravíme cenovou nabídku.</p>
+                </div>
+            </header>
+            <section class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white rounded-xl shadow-lg overflow-hidden">
+                        <!-- Leva cast - Info -->
+                        <div class="p-10 bg-dark text-white">
+                            <h3 class="text-2xl font-bold mb-8">Výroba a Poptávky</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <i class="fa-solid fa-phone text-primary text-xl mt-1 w-8"></i>
+                                    <div><p class="text-sm text-gray-400">Telefon</p><p class="font-bold text-lg">+420 602 583 199</p></div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fa-solid fa-envelope text-primary text-xl mt-1 w-8"></i>
+                                    <div><p class="text-sm text-gray-400">E-mail</p><p class="font-bold text-lg">info@stavebni-bunky.cz</p></div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fa-solid fa-location-dot text-primary text-xl mt-1 w-8"></i>
+                                    <div><p class="text-sm text-gray-400">Výrobní hala a sídlo</p><p class="font-bold text-lg">Všestary 30<br>503 12 Všestary</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Prava cast - Formular -->
+                        <div class="p-10">
+                            <h3 class="text-2xl font-bold text-dark mb-6">Napište nám</h3>
+                            <form>
+                                <div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2">Jméno / Firma</label><input type="text" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"></div>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Telefon</label><input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"></div>
+                                    <div><label class="block text-gray-700 text-sm font-bold mb-2">E-mail</label><input type="email" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"></div>
+                                </div>
+                                <div class="mb-6"><label class="block text-gray-700 text-sm font-bold mb-2">Poptávka</label><textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"></textarea></div>
+                                <button type="button" class="w-full bg-primary hover:bg-primaryHover text-white font-bold py-3 px-4 rounded transition">Odeslat poptávku</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Patička -->
+    <footer class="bg-darker text-gray-400 py-12 border-t border-gray-800 mt-auto">
+        <div class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <div class="text-2xl font-black text-white tracking-tighter mb-4">DOŠEL<span class="text-primary">.</span></div>
+                <p class="text-sm mb-4">Specialisté na výrobu zateplených stavebních buněk a zámečnických konstrukcí s tradicí od roku 1995.</p>
+                <div class="text-white text-lg font-bold"><i class="fa-solid fa-phone text-primary mr-2"></i> +420 602 583 199</div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Odkazy</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#konfigurator" onclick="showPage('konfigurator')" class="hover:text-primary transition">Konfigurátor buněk</a></li>
+                    <li><a href="#bunky" onclick="showPage('bunky')" class="hover:text-primary transition">Stavební buňky</a></li>
+                    <li><a href="#zamecnictvi" onclick="showPage('zamecnictvi')" class="hover:text-primary transition">Zámečnictví</a></li>
+                    <li><a href="#kontakt" onclick="showPage('kontakt')" class="hover:text-primary transition">Kontakt</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Adresa</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><i class="fa-solid fa-location-dot mr-2"></i> Všestary 30</li>
+                    <li><i class="fa-solid fa-envelope mr-2"></i> info@stavebni-bunky.cz</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript pro navigaci (SPA logika) a Konfigurátor -->
+    <script>
+        // SPA Navigace
+        function showPage(pageId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            const target = document.getElementById('page-' + pageId);
+            if (target) target.classList.add('active');
+
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('data-target') === pageId) link.classList.add('active');
+            });
+            window.scrollTo(0, 0);
+        }
+
+        window.onload = function() {
+            const hash = window.location.hash.substring(1);
+            if(hash && document.getElementById('page-' + hash)) showPage(hash);
+        };
+
+        // Konfigurátor Logika
+        function nextStep(stepNumber) {
+            document.querySelectorAll('.conf-step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step-' + stepNumber).classList.add('active');
+            
+            // Update progress bar
+            const progress = (stepNumber / 5) * 100;
+            document.getElementById('conf-progress-bar').style.width = progress + '%';
+            
+            // Update text color in progress
+            const texts = document.getElementById('conf-progress-text').children;
+            for(let i=0; i<texts.length; i++) {
+                if(i < stepNumber) {
+                    texts[i].classList.add('text-primary');
+                    texts[i].classList.remove('text-gray-400');
+                } else {
+                    texts[i].classList.remove('text-primary');
+                    texts[i].classList.add('text-gray-400');
+                }
+            }
+        }
+
+        function selectSingleOption(stepId, element) {
+            // Odebereme 'selected' ze všech v daném kroku
+            document.querySelectorAll('#' + stepId + ' .conf-option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.classList.remove('border-primary');
+                opt.classList.add('border-gray-200');
+            });
+            // Přidáme kliknutému
+            element.classList.add('selected');
+            element.classList.remove('border-gray-200');
+            element.classList.add('border-primary');
+        }
+
+        function toggleMultiOption(element) {
+            element.classList.toggle('selected');
+            const icon = element.querySelector('.fa-check');
+            const box = element.querySelector('.check-icon');
+            
+            if(element.classList.contains('selected')) {
+                element.classList.remove('border-gray-200');
+                element.classList.add('border-primary');
+                box.classList.add('bg-primary', 'border-primary');
+                box.classList.remove('border-gray-300');
+                icon.classList.remove('hidden');
+                icon.classList.add('text-white');
+            } else {
+                element.classList.add('border-gray-200');
+                element.classList.remove('border-primary');
+                box.classList.remove('bg-primary', 'border-primary');
+                box.classList.add('border-gray-300');
+                icon.classList.add('hidden');
+                icon.classList.remove('text-white');
+            }
+        }
+    </script>
+</body>
+</html>
