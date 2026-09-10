@@ -45,8 +45,8 @@
     <div class="bg-darker text-gray-300 py-2 text-sm hidden sm:block">
         <div class="container mx-auto px-4 flex justify-between items-center max-w-6xl">
             <div class="flex space-x-6">
-                <span><i class="fa-solid fa-envelope mr-2 text-primary"></i> info@stavebni-bunky.cz</span>
-                <span><i class="fa-solid fa-location-dot mr-2 text-primary"></i> Všestary 30, Královéhradecký kraj</span>
+                <span><i class="fa-solid fa-envelope mr-2 text-primary"></i> dosel@centrum.cz</span>
+                <span><i class="fa-solid fa-location-dot mr-2 text-primary"></i> Všestary 56, 503 12</span>
             </div>
             <div>
                 <a href="#kontakt" onclick="showPage('kontakt')" class="font-bold text-white hover:text-primary transition"><i class="fa-solid fa-phone mr-2 text-primary"></i> +420 602 583 199</a>
@@ -68,11 +68,24 @@
                 <a href="#onas" onclick="showPage('onas')" data-target="onas" class="nav-link hover:text-primary transition">O nás</a>
                 <a href="#kontakt" onclick="showPage('kontakt')" data-target="kontakt" class="nav-link hover:text-primary transition">Kontakt</a>
             </div>
-            <div>
-                <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-6 py-2 rounded font-bold transition shadow-lg shadow-orange-500/30 flex items-center">
-                    <i class="fa-solid fa-calculator mr-2"></i> Konfigurátor
+            <div class="flex items-center gap-3">
+                <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-4 sm:px-6 py-2 rounded font-bold transition shadow-lg shadow-orange-500/30 flex items-center">
+                    <i class="fa-solid fa-calculator sm:mr-2"></i> <span class="hidden sm:inline">Konfigurátor</span>
                 </a>
+                <button type="button" onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false" id="menu-button" class="md:hidden text-dark text-2xl w-10 h-10 flex items-center justify-center rounded hover:bg-gray-100 transition">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
+        </div>
+
+        <!-- Mobilní menu -->
+        <div id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white" hidden>
+            <a href="#uvod" onclick="showPage('uvod'); toggleMobileMenu()" class="block px-6 py-4 font-medium text-gray-600 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition">Úvod</a>
+            <a href="#bunky" onclick="showPage('bunky'); toggleMobileMenu()" class="block px-6 py-4 font-medium text-gray-600 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition">Stavební buňky</a>
+            <a href="#zamecnictvi" onclick="showPage('zamecnictvi'); toggleMobileMenu()" class="block px-6 py-4 font-medium text-gray-600 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition">Zámečnictví</a>
+            <a href="#realizace" onclick="showPage('realizace'); toggleMobileMenu()" class="block px-6 py-4 font-medium text-gray-600 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition">Realizace</a>
+            <a href="#onas" onclick="showPage('onas'); toggleMobileMenu()" class="block px-6 py-4 font-medium text-gray-600 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition">O nás</a>
+            <a href="#kontakt" onclick="showPage('kontakt'); toggleMobileMenu()" class="block px-6 py-4 font-medium text-gray-600 hover:bg-gray-50 hover:text-primary transition">Kontakt</a>
         </div>
     </nav>
 
@@ -83,7 +96,7 @@
         <div id="page-uvod" class="page-section active">
             <!-- Hero Sekce -->
             <header class="relative bg-dark text-white">
-                <!-- TODO: sem doplnit reálnou fotku výrobní haly / buňky z fotoshootu -->
+                <div class="absolute inset-0 z-0 opacity-40 bg-cover bg-center" style="background-image: url('images/bunky/bunka-11.jpg');"></div>
                 <div class="absolute inset-0 bg-gradient-to-r from-darker to-transparent z-0"></div>
                 
                 <div class="container mx-auto px-4 py-32 md:py-48 relative z-10 max-w-6xl">
@@ -142,6 +155,30 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Recenze zákazníků -->
+            <section class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <h2 class="text-3xl font-bold text-center mb-12">Co řekli naši zákazníci</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <figure class="bg-white rounded-xl p-8 shadow-md border border-gray-100 flex flex-col">
+                            <i class="fa-solid fa-quote-left text-3xl text-primary mb-4"></i>
+                            <blockquote class="text-gray-600 leading-relaxed flex-grow">Vynikající firma na všechno. Zadal jsem výrobu nerezového zábradlí. Chválím i rady – dostal jsem odpovědi na každé otázky. Kvalita je bezkonkurenční. Velký výběr příslušenství. Design je estetický a účelný. Děkuji pane Došel a týmu za to všechno, jen tak dál!</blockquote>
+                            <figcaption class="mt-6 pt-4 border-t border-gray-100 font-bold text-dark">Jiří Pospíšíl</figcaption>
+                        </figure>
+                        <figure class="bg-white rounded-xl p-8 shadow-md border border-gray-100 flex flex-col">
+                            <i class="fa-solid fa-quote-left text-3xl text-primary mb-4"></i>
+                            <blockquote class="text-gray-600 leading-relaxed flex-grow">Stavební buňky jsou nejlepší na českém trhu, nikdo nemá takové zateplení a výbavu. Divím se, jak je možný, že dávají v ceně tak luxusní výbavu a ještě to za dobrou cenu dovezou. Lze jen opravdu doporučit.</blockquote>
+                            <figcaption class="mt-6 pt-4 border-t border-gray-100 font-bold text-dark">Vendy Marešová</figcaption>
+                        </figure>
+                        <figure class="bg-white rounded-xl p-8 shadow-md border border-gray-100 flex flex-col">
+                            <i class="fa-solid fa-quote-left text-3xl text-primary mb-4"></i>
+                            <blockquote class="text-gray-600 leading-relaxed flex-grow">Rychlost dodání celé zakázky mne mile překvapila. Vše je upravené na moje požadavky, taky jsem dostala na vše odpověď přes e-mail. Mohu jen doporučit.</blockquote>
+                            <figcaption class="mt-6 pt-4 border-t border-gray-100 font-bold text-dark">Lenka Kryková</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
         </div>
 
 
@@ -161,8 +198,7 @@
 
                         <div class="bg-white rounded-xl overflow-hidden shadow-xl border-2 border-primary relative">
                             <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full z-10">Základ</div>
-                            <!-- TODO: reálná fotka základní buňky z fotoshootu -->
-                            <div class="h-64 bg-gray-300 overflow-hidden"></div>
+                            <div class="h-64 bg-gray-300 overflow-hidden"><img src="images/galerie/10.jpg" alt="Základní stavební buňka" class="w-full h-full object-cover"></div>
                             <div class="p-6">
                                 <h3 class="text-xl font-bold text-dark mb-2">Základní provedení s elektroinstalací</h3>
                                 <p class="text-gray-500 text-sm mb-4">Zateplená mobilní buňka připravená k okamžitému využití jako sklad, kancelář nebo šatna. Vnější rozměr 4,5 × 2,5 × 2,6 m.</p>
@@ -171,8 +207,7 @@
                         </div>
 
                         <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
-                            <!-- TODO: reálná fotka vybavení kanceláře z fotoshootu -->
-                            <div class="h-64 bg-gray-300 overflow-hidden"></div>
+                            <div class="h-64 bg-gray-300 overflow-hidden"><img src="images/bunky/kancelar.jpg" alt="Vybavení kanceláře v buňce" class="w-full h-full object-cover"></div>
                             <div class="p-6">
                                 <h3 class="text-xl font-bold text-dark mb-2">+ Vybavení kanceláře</h3>
                                 <p class="text-gray-500 text-sm mb-4">Příplatek k základní buňce – nábytek a vybavení pro zázemí stavbyvedoucího.</p>
@@ -181,8 +216,7 @@
                         </div>
 
                         <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
-                            <!-- TODO: reálná fotka šatny z fotoshootu -->
-                            <div class="h-64 bg-gray-300 overflow-hidden"></div>
+                            <div class="h-64 bg-gray-300 overflow-hidden"><img src="images/bunky/satna.webp" alt="Šatna se skříňkami v buňce" class="w-full h-full object-cover"></div>
                             <div class="p-6">
                                 <h3 class="text-xl font-bold text-dark mb-2">+ Šatna</h3>
                                 <p class="text-gray-500 text-sm mb-4">Příplatek k základní buňce – vybavení pro šatnu a denní místnost pro vaše lidi.</p>
@@ -190,6 +224,96 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technické parametry -->
+            <section class="py-16 bg-white border-t border-gray-100">
+                <div class="container mx-auto px-4 max-w-5xl">
+                    <h2 class="text-3xl font-bold text-center mb-4">Technické údaje stavební buňky</h2>
+                    <p class="text-center text-gray-500 mb-10">Kompletní parametry standardního provedení.</p>
+
+                    <div class="overflow-x-auto rounded-xl border border-gray-200">
+                        <table class="w-full text-left text-sm">
+                            <tbody class="divide-y divide-gray-100">
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4 w-56">Rozměry buňky</th>
+                                    <td class="p-4 text-gray-600">Vnitřní rozměry 4000 × 2350 × 2150 mm (vnější rozměr: šíře 2500 mm, délka 4500 mm, výška 2600 mm)</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Váha standardní buňky</th>
+                                    <td class="p-4 text-gray-600">1180 kg</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Použití</th>
+                                    <td class="p-4 text-gray-600">Kancelář, šatna, sklad, sociální zařízení</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Převoz buňky</th>
+                                    <td class="p-4 text-gray-600">Jednoramenný nosič kontejneru 7 t (výška háku 1000 mm), uchycení za oka nad střechou pomocí jeřábu</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Rám pod buňkou</th>
+                                    <td class="p-4 text-gray-600">IPE 120 ČSN 425553 se závěsným okem 40 mm, ke kterému se dodává uzamykatelný kryt</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Konstrukce</th>
+                                    <td class="p-4 text-gray-600">Ocelový rám o profilech 60/40/3 a 30/30/3. Rohové prvky jsou svařované a vyztužené, z vnějšku je k nim montované závěsné oko pomocí šroubů 2× M20. Konstrukce se dodává v šedivé vrchní barvě.</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Podlaha</th>
+                                    <td class="p-4 text-gray-600">Nosná konstrukce z ocelových profilů 60×40×2 přivařených k nosnému rámu. Spodní část tvoří vana z plechu o síle 2 mm, tepelnou izolaci polystyren o síle 30 mm. Vrch tvoří dřevotřískové desky V 100 o tloušťce 19 mm pokryté linem o síle 1,4–2 mm. Spáry rohového styku jsou kryty plastovým páskem. Nosnost podlahy 2,3 kN/m².</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Stěny (opláštění)</th>
+                                    <td class="p-4 text-gray-600">Panely KINGSPAN o síle 40 mm dodávané v bílé barvě RAL 9010. Rohy jsou opatřeny krycími PZ plechy, které jsou nýtované.</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Střecha</th>
+                                    <td class="p-4 text-gray-600">Obdobné provedení jako stěny, krycí vrstvu tvoří trapézový panel o síle 80 mm. Voda je svedena do příčného venkovního oplechování. Střecha je dimenzována na zatížení ve IV. sněhovém pásmu (1,5 kN/m²).</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Oplechování</th>
+                                    <td class="p-4 text-gray-600">Rohové, příčné a podélné plechování z pozinkovaného plechu o síle 1 mm, uchycené do pláště buňky pomocí nýtů.</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Dveře</th>
+                                    <td class="p-4 text-gray-600">Vyrobeny z jaklových profilů JANSEN s výplní 40 mm. Opatřeny bezpečnostním kováním CONEX R4 a přivařeným bezpečnostním krytem na visací zámek (TOKOZ). Žárově zinkovány.</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Okno</th>
+                                    <td class="p-4 text-gray-600">Rozměr 900 × 900 mm, plastové okno opatřené pevnou mříží. Dodává se ve sklopném provedení, mříž žárově zinkována.</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Závěsná oka</th>
+                                    <td class="p-4 text-gray-600">Šroubována na podélné stěně do vyztužené konstrukce, vrchem spojena jistícími jakly. Vyrobena z U100, žárově zinkována.</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Vybavení za příplatek</th>
+                                    <td class="p-4 text-gray-600">Elektroinstalace 230 V, vnitřní osvětlení, konvektor 2000 W, rozvod zásuvek, možnost vybavení nábytkem (kancelář, šatna apod.), šatní skříně, lavice a stoly, bezpečnostní zámky a výbava.</td>
+                                </tr>
+                                <tr class="align-top">
+                                    <th scope="row" class="bg-gray-50 font-bold text-dark p-4">Dodává se</th>
+                                    <td class="p-4 text-gray-600">Revizní zpráva na elektrickou instalaci, prohlášení o shodě stavebních izolačních panelů KINGSPAN, prohlášení o shodě ocelových prvků.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nátěr a polep -->
+            <section class="py-16 bg-gray-50 border-t border-gray-100">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl font-bold mb-4">Nabízíme nátěr a polep podle vašich představ</h2>
+                        <p class="text-gray-500 max-w-2xl mx-auto">Buňku dodáme v barvě a s polepem podle vaší firemní identity.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <img src="images/bunky/nater-polep.jpg" alt="Buňka s firemním polepem a oranžovým rámem" class="rounded-xl h-64 w-full object-cover shadow-md">
+                        <img src="images/bunky/bunka-zima.jpg" alt="Buňky s firemním polepem" class="rounded-xl h-64 w-full object-cover shadow-md">
+                        <img src="images/galerie/IMG_9681-1.jpg" alt="Buňka s polepem firmy zákazníka" class="rounded-xl h-64 w-full object-cover shadow-md">
                     </div>
                 </div>
             </section>
@@ -221,10 +345,10 @@
                             </ul>
                             <a href="#kontakt" onclick="showPage('kontakt')" class="inline-block mt-8 bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold transition">Poptat zámečnické práce</a>
                         </div>
-                        <!-- TODO: reálné fotky zámečnických prací / sváření z fotoshootu -->
+                        <!-- TODO: doplnit fotky konkrétních zámečnických prací (balkony, brány, zábradlí) – na starém webu nejsou -->
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="rounded-lg h-48 w-full bg-gray-300"></div>
-                            <div class="rounded-lg h-48 w-full bg-gray-300 mt-8"></div>
+                            <img src="images/galerie/IMG_9673.jpg" alt="Buňky s bezpečnostními mřížemi v oknech" class="rounded-lg h-48 w-full object-cover">
+                            <img src="images/bunky/bunka-stribrna.jpg" alt="Zámečnictví Došel – odvoz buňky" class="rounded-lg h-48 w-full object-cover mt-8">
                         </div>
                     </div>
                 </div>
@@ -466,17 +590,58 @@
             <header class="bg-dark text-white py-20">
                 <div class="container mx-auto px-4 text-center max-w-4xl">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Realizace</h1>
-                    <p class="text-xl text-gray-400">Přehled dokončených zakázek zatím připravujeme.</p>
+                    <p class="text-xl text-gray-400">Ukázky vyrobených buněk z naší dílny ve Všestarech.</p>
                 </div>
             </header>
             <section class="py-16 bg-gray-50">
-                <div class="container mx-auto px-4 max-w-4xl text-center">
-                    <!-- TODO: nahradit reálnými realizacemi (foto, lokalita, rozsah prací) po fotoshootu a schválení s panem Došelem -->
-                    <i class="fa-solid fa-images text-5xl text-gray-300 mb-6"></i>
-                    <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto">Galerii konkrétních zakázek doplníme, jakmile nafotíme aktuální realizace. Mezitím se podívejte na naše typová řešení nebo nás rovnou kontaktujte.</p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="#bunky" onclick="showPage('bunky')" class="bg-white hover:bg-gray-100 text-dark px-8 py-4 rounded font-bold text-lg text-center transition border border-gray-200">Typová řešení</a>
-                        <a href="#kontakt" onclick="showPage('kontakt')" class="bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded font-bold text-lg text-center transition">Kontaktovat výrobu</a>
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="galerie">
+                        <button type="button" onclick="openLightbox('images/galerie/10.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/10.jpg" alt="Stavební buňka v bílém provedení" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9662.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9662.jpg" alt="Interiér šatny se skříňkami" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9664.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9664.jpg" alt="Denní místnost se stolem a lavicemi" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9666.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9666.jpg" alt="Interiér buňky s věšáky a skříňkou" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9667.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9667.jpg" alt="Detail věšáku v buňce" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9670.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9670.jpg" alt="Vyrobené buňky připravené k odvozu" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9673.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9673.jpg" alt="Buňky s bezpečnostními mřížemi v oknech" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9674.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9674.jpg" alt="Buňky u výrobní haly" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9681-1.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9681-1.jpg" alt="Buňka s firemním polepem zákazníka" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9682.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9682.jpg" alt="Polepená buňka připravená k expedici" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9683.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9683.jpg" alt="Buňky s polepem u haly" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9684.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9684.jpg" alt="Buňky připravené k nakládce" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9685.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9685.jpg" alt="Vyrobené stavební buňky" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                        <button type="button" onclick="openLightbox('images/galerie/IMG_9686.jpg')" class="group relative overflow-hidden rounded-lg aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary">
+                            <img src="images/galerie/IMG_9686.jpg" alt="Bílé stavební buňky u haly" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <a href="#konfigurator" onclick="showPage('konfigurator')" class="inline-block bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded font-bold text-lg transition shadow-lg">Sestavit vlastní buňku</a>
                     </div>
                 </div>
             </section>
@@ -495,21 +660,34 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white rounded-xl shadow-lg overflow-hidden">
                         <!-- Leva cast - Info -->
                         <div class="p-10 bg-dark text-white">
-                            <h3 class="text-2xl font-bold mb-8">Výroba a Poptávky</h3>
+                            <h3 class="text-2xl font-bold mb-8">Zámečnictví Došel Všestary</h3>
                             <div class="space-y-6">
                                 <div class="flex items-start">
+                                    <i class="fa-solid fa-user text-primary text-xl mt-1 w-8"></i>
+                                    <div><p class="text-sm text-gray-400">Odpovědná osoba</p><p class="font-bold text-lg">Michal Došel</p></div>
+                                </div>
+                                <div class="flex items-start">
                                     <i class="fa-solid fa-phone text-primary text-xl mt-1 w-8"></i>
-                                    <div><p class="text-sm text-gray-400">Telefon</p><p class="font-bold text-lg">+420 602 583 199</p></div>
+                                    <div><p class="text-sm text-gray-400">Telefon</p><p class="font-bold text-lg"><a href="tel:+420602583199" class="hover:text-primary transition">+420 602 583 199</a></p></div>
                                 </div>
                                 <div class="flex items-start">
                                     <i class="fa-solid fa-envelope text-primary text-xl mt-1 w-8"></i>
-                                    <div><p class="text-sm text-gray-400">E-mail</p><p class="font-bold text-lg">info@stavebni-bunky.cz</p></div>
+                                    <div><p class="text-sm text-gray-400">E-mail</p><p class="font-bold text-lg"><a href="mailto:dosel@centrum.cz" class="hover:text-primary transition">dosel@centrum.cz</a></p></div>
                                 </div>
                                 <div class="flex items-start">
                                     <i class="fa-solid fa-location-dot text-primary text-xl mt-1 w-8"></i>
-                                    <div><p class="text-sm text-gray-400">Výrobní hala a sídlo</p><p class="font-bold text-lg">Všestary 30<br>503 12 Všestary</p></div>
+                                    <div><p class="text-sm text-gray-400">Adresa</p><p class="font-bold text-lg">Všestary 56, 503 12</p></div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fa-solid fa-clock text-primary text-xl mt-1 w-8"></i>
+                                    <div><p class="text-sm text-gray-400">Pracovní doba</p><p class="font-bold text-lg">Pondělí – Pátek, 6.00 – 15.30</p></div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fa-solid fa-building text-primary text-xl mt-1 w-8"></i>
+                                    <div><p class="text-sm text-gray-400">IČ / DIČ</p><p class="font-bold text-lg">02626098 / CZ7912163094</p></div>
                                 </div>
                             </div>
+                            <p class="text-sm text-gray-400 mt-8 pt-6 border-t border-gray-700">Osobní návštěvu je nutné předem dohodnout.</p>
                         </div>
                         <!-- Prava cast - Formular -->
                         <div class="p-10">
@@ -529,7 +707,98 @@
             </section>
         </div>
 
+        <!-- ================= STRÁNKA: GDPR ================= -->
+        <div id="page-gdpr" class="page-section">
+            <header class="bg-dark text-white py-16">
+                <div class="container mx-auto px-4 text-center max-w-4xl">
+                    <h1 class="text-3xl md:text-4xl font-bold mb-3">Prohlášení o ochraně osobních údajů</h1>
+                    <p class="text-lg text-gray-400">Zpracování osobních údajů podle nařízení GDPR.</p>
+                </div>
+            </header>
+            <section class="py-16 bg-white">
+                <!-- TODO: bod V. (subdodavatelé) uvádí FORMEDIA CZ s.r.o. jako provozovatele webu – po přechodu na nový hosting je nutné aktualizovat -->
+                <div class="container mx-auto px-4 max-w-3xl text-gray-600 leading-relaxed space-y-8">
+                    <div>
+                        <h2 class="text-xl font-bold text-dark mb-3">I. Základní ustanovení</h2>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Správcem osobních údajů podle článku 6 Nařízení EVROPSKÉHO PARLAMENTU A RADY 2016/679 o ochraně fyzických osob v souvislosti se zpracováním osobních údajů o volném pohybu těchto údajů (dále jen „GDPR“) je Michal Došel, IČ: 02626098, se sídlem Všestary 56, 503 12 (dále jen „správce“).</li>
+                            <li>Správce osobních údajů – adresa: Všestary 56, 503 12; e-mail: dosel@centrum.cz, telefon: +420 495 458 121.</li>
+                            <li>Osobními údaji se rozumí veškeré informace o identifikované nebo identifikovatelné fyzické osobě, kterou lze přímo či nepřímo identifikovat, zejména odkazem na určitý identifikátor, například jméno, identifikační číslo, lokační údaje, síťový identifikátor nebo na jeden či více zvláštních prvků fyzické, fyziologické, genetické, psychické, ekonomické, kulturní nebo společenské identity této fyzické osoby.</li>
+                            <li>Správce nemá jmenovaného pověřence pro správu osobních údajů.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-dark mb-3">II. Důvod zpracování osobních údajů</h2>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Zákonným důvodem zpracování osobních údajů je plnění smlouvy mezi Vámi a správcem podle čl. 6 odst. 1 písm. b) GDPR – zpracování je nezbytné pro splnění smlouvy, jejíž smluvní stranou je subjekt údajů, nebo pro provedení opatření přijatých před uzavřením smlouvy na žádost tohoto subjektu údajů.</li>
+                            <li>Ze strany správce nedochází k automatickému individuálnímu rozhodování ve smyslu čl. 22 GDPR.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-dark mb-3">III. Účel zpracování, kategorie a zdroje osobních údajů</h2>
+                        <p><strong class="text-dark">Zákonný důvod:</strong> plnění smlouvy</p>
+                        <p><strong class="text-dark">Účel:</strong> Vyřízení objednávky nebo odpověď na poptávku zaslanou přes kontaktní formulář</p>
+                        <p><strong class="text-dark">Údaje:</strong> Osobní údaje klientů (kontaktní údaje)</p>
+                        <p><strong class="text-dark">Zdroj údajů:</strong> Kontaktní formulář, objednávka</p>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-dark mb-3">IV. Doba uchovávání údajů</h2>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Správce uchovává osobní údaje: v případě poptávky osobní údaje obsažené ve formuláři spravujeme pouze za účelem odpovědi nebo vyřízení vašeho dotazu či poptávky (pouze po dobu jednání o uzavření smlouvy), nejdéle 3 roky od vaší poptávky, pokud neudělíte souhlas k dalšímu zpracování. V případě objednávky po dobu nezbytnou k výkonu práv a povinností vyplývajících ze smluvního vztahu mezi Vámi a správcem a uplatňování nároků z těchto smluvních vztahů (po dobu 15 let od ukončení smluvního vztahu).</li>
+                            <li>Po uplynutí doby uchovávání osobních údajů správce osobní údaje vymaže.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-dark mb-3">V. Příjemci osobních údajů (subdodavatelé správce)</h2>
+                        <p>Příjemci osobních údajů jsou osoby zajišťující služby provozování webu a další související služby. Osobní údaje subjektu údajů mohou být pro účely řádného plnění smlouvy poskytnuty poskytovateli doručovacích služeb a dále osobám, které správci poskytují právní, účetní a IT služby v zájmu zajištění řádného plnění povinností stanovených obecně závaznými právními předpisy. Správce nemá v úmyslu předat osobní údaje subjektu údajů do třetí země, mezinárodní organizaci nebo jiným než výše uvedeným třetím osobám.</p>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-dark mb-3">VI. Další ujednání</h2>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Máte právo na přístup ke svým osobním údajům.</li>
+                            <li>Jste oprávněni kdykoli aktualizovat, opravovat či měnit své osobní údaje, případně omezit zpracování osobních údajů.</li>
+                            <li>Můžete vznést námitku proti zpracování osobních údajů.</li>
+                            <li>Dále máte právo podat stížnost u Úřadu pro ochranu osobních údajů v případě, že se domníváte, že bylo porušeno Vaše právo na ochranu osobních údajů.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-dark mb-3">VII. Podmínky zabezpečení osobních údajů</h2>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Správce prohlašuje, že přijal veškerá vhodná technická a organizační opatření k zabezpečení osobních údajů.</li>
+                            <li>Správce přijal technická opatření k zabezpečení datových úložišť a úložišť osobních údajů v listinné podobě, zejména hesla, antivirový program, zálohování, uzamykání.</li>
+                            <li>Správce prohlašuje, že k osobním údajům mají přístup pouze jím pověřené osoby.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-dark mb-3">VIII. Závěrečná ustanovení</h2>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Odesláním objednávky z internetového objednávkového formuláře nebo poptávky z internetového poptávkového formuláře potvrzujete, že jste seznámen/a s podmínkami ochrany osobních údajů a že je v celém rozsahu přijímáte.</li>
+                            <li>Správce je oprávněn tyto podmínky změnit. Novou verzi podmínek ochrany osobních údajů zveřejní na svých internetových stránkách.</li>
+                        </ol>
+                    </div>
+                    <div class="border-t border-gray-200 pt-8">
+                        <h2 class="text-xl font-bold text-dark mb-3">Mimosoudní řešení spotřebitelských sporů</h2>
+                        <p>Informační povinnost o mimosoudním řešení spotřebitelských sporů (ust. § 14 zák. č. 634/1992 Sb., o ochraně spotřebitele, ve znění pozdějších předpisů): V případě, že dojde mezi námi a spotřebitelem ke vzniku spotřebitelského sporu z kupní smlouvy nebo ze smlouvy o poskytování služeb, který se nepodaří vyřešit vzájemnou dohodou, může spotřebitel podat návrh na mimosoudní řešení takového sporu určenému subjektu mimosoudního řešení spotřebitelských sporů, kterým je Česká obchodní inspekce, Ústřední inspektorát – oddělení ADR, Štěpánská 796/44, 110 00 Praha 1, e-mail: adr@coi.cz, web: <a href="https://adr.coi.cz" class="text-primary hover:underline" rel="noopener">adr.coi.cz</a>. Spotřebitel může využít rovněž platformu pro řešení sporů online zřízenou Evropskou komisí na adrese <a href="http://ec.europa.eu/consumers/odr/" class="text-primary hover:underline" rel="noopener">ec.europa.eu/consumers/odr</a>.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
     </main>
+
+    <!-- Lightbox pro fotogalerii -->
+    <div id="lightbox" class="fixed inset-0 z-[60] bg-black/90 items-center justify-center p-4" style="display:none" onclick="closeLightbox()">
+        <button type="button" onclick="closeLightbox()" aria-label="Zavřít" class="absolute top-4 right-6 text-white text-4xl leading-none hover:text-primary transition">&times;</button>
+        <img id="lightbox-img" src="" alt="" class="max-h-full max-w-full object-contain rounded-lg">
+    </div>
+
+    <!-- Cookie lišta -->
+    <div id="cookie-bar" class="fixed bottom-0 left-0 right-0 z-[70] bg-darker text-gray-300 border-t border-gray-700 p-4 md:p-6" style="display:none">
+        <div class="container mx-auto max-w-6xl flex flex-col md:flex-row md:items-center gap-4 justify-between">
+            <p class="text-sm">Používáme pouze technické cookies nezbytné pro fungování webu. Více v <a href="#gdpr" onclick="showPage('gdpr'); acceptCookies();" class="text-primary hover:underline">zásadách ochrany osobních údajů</a>.</p>
+            <button type="button" onclick="acceptCookies()" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold transition whitespace-nowrap">Rozumím</button>
+        </div>
+    </div>
 
     <!-- Patička -->
     <footer class="bg-darker text-gray-400 py-12 border-t border-gray-800 mt-auto">
@@ -550,12 +819,18 @@
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4">Adresa</h4>
+                <h4 class="text-white font-bold mb-4">Kontakt</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><i class="fa-solid fa-location-dot mr-2"></i> Všestary 30</li>
-                    <li><i class="fa-solid fa-envelope mr-2"></i> info@stavebni-bunky.cz</li>
+                    <li><i class="fa-solid fa-location-dot mr-2"></i> Všestary 56, 503 12</li>
+                    <li><i class="fa-solid fa-envelope mr-2"></i> <a href="mailto:dosel@centrum.cz" class="hover:text-primary transition">dosel@centrum.cz</a></li>
+                    <li><i class="fa-solid fa-clock mr-2"></i> Po–Pá 6.00–15.30</li>
+                    <li><i class="fa-solid fa-building mr-2"></i> IČ 02626098</li>
                 </ul>
             </div>
+        </div>
+        <div class="container mx-auto px-4 max-w-6xl mt-10 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between gap-4 text-sm">
+            <span>© 2026 Zámečnictví Došel</span>
+            <a href="#gdpr" onclick="showPage('gdpr')" class="hover:text-primary transition">Zásady ochrany osobních údajů</a>
         </div>
     </footer>
 
@@ -590,7 +865,44 @@
         window.onload = function() {
             const hash = window.location.hash.substring(1);
             if(hash && document.getElementById('page-' + hash)) showPage(hash);
+
+            let souhlas = null;
+            try { souhlas = localStorage.getItem('dosel-cookies'); } catch (e) {}
+            if (souhlas !== 'ok') document.getElementById('cookie-bar').style.display = 'block';
         };
+
+        // Mobilní menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const button = document.getElementById('menu-button');
+            menu.hidden = !menu.hidden;
+            button.setAttribute('aria-expanded', String(!menu.hidden));
+            button.querySelector('i').className = menu.hidden ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
+        }
+
+        // Cookie lišta
+        function acceptCookies() {
+            try { localStorage.setItem('dosel-cookies', 'ok'); } catch (e) {}
+            document.getElementById('cookie-bar').style.display = 'none';
+        }
+
+        // Lightbox fotogalerie
+        function openLightbox(src) {
+            const box = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = src;
+            box.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.getElementById('lightbox-img').src = '';
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
 
         // Konfigurátor Logika
         function nextStep(stepNumber) {
@@ -677,7 +989,7 @@
                 'E-mail: ' + email + '\n' +
                 'Telefon: ' + (phone || '-');
 
-            window.location.href = 'mailto:info@stavebni-bunky.cz?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            window.location.href = 'mailto:dosel@centrum.cz?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
         }
 
         function submitContactForm() {
@@ -698,7 +1010,7 @@
                 'E-mail: ' + (email || '-') + '\n\n' +
                 'Zpráva:\n' + message;
 
-            window.location.href = 'mailto:info@stavebni-bunky.cz?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            window.location.href = 'mailto:dosel@centrum.cz?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
         }
     </script>
 </body>
