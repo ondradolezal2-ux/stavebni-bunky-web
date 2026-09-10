@@ -219,39 +219,26 @@
         <!-- ================= STRÁNKA: ÚVOD ================= -->
         <div id="page-uvod" class="page-section active">
             <!-- Hero Sekce – živý mini-konfigurátor -->
-            <header class="relative bg-dark text-white overflow-hidden">
-                <div class="absolute inset-0 z-0 bg-cover bg-center opacity-25" style="background-image: url('images/bunky/bunka-11.jpg');"></div>
-                <div class="absolute inset-0 bg-gradient-to-br from-darker via-darker/90 to-dark/70 z-0"></div>
+            <header class="relative bg-darker text-white overflow-hidden">
+                <div class="absolute inset-0 z-0 bg-cover bg-center" style="background-image: url('images/bunky/bunka-11.jpg');"></div>
+                <div class="absolute inset-0 z-0" style="background-color: #0f172a; opacity: 0.82;"></div>
+                <div class="absolute inset-0 z-0 bg-gradient-to-t from-darker via-transparent to-darker/60"></div>
 
-                <div class="container mx-auto px-4 py-16 md:py-24 relative z-10 max-w-6xl">
-                    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-
-                        <div>
-                            <span class="inline-block py-1 px-3 rounded bg-gray-800 border border-primary text-sm text-primary font-bold mb-4 uppercase tracking-wider">Výroba od roku 1995</span>
-                            <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-6">
-                                Buňka, kterou si postavíte podle sebe.
-                            </h1>
-                            <p class="text-lg text-gray-300 mb-8 leading-relaxed">
-                                Bytelná zateplená konstrukce zůstává stejná – vnitřek uděláme přesně podle toho, co potřebujete. Vyrábíme ve vlastní dílně ve Všestarech od roku 1995.
-                            </p>
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded font-bold text-lg text-center transition shadow-lg">
-                                    Sestavit buňku online
-                                </a>
-                                <a href="#realizace" onclick="showPage('realizace')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded font-bold text-lg text-center transition">
-                                    Prohlédnout realizace
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="relative">
-                            <img src="images/galerie/10.jpg" alt="Stavební buňka z výroby Zámečnictví Došel" class="rounded-2xl shadow-2xl w-full object-cover aspect-[4/3]">
-                            <div class="absolute -bottom-5 -left-4 sm:left-6 bg-white text-dark rounded-xl shadow-xl px-5 py-3">
-                                <p class="text-xs text-gray-500 font-medium">Cena od</p>
-                                <p class="text-xl font-black">112 200 Kč <span class="text-xs font-normal text-gray-400 whitespace-nowrap">bez DPH</span></p>
-                            </div>
-                        </div>
-
+                <div class="container mx-auto px-4 py-24 md:py-32 relative z-10 max-w-3xl text-center">
+                    <span class="inline-block py-1 px-3 rounded bg-white/5 border border-primary text-sm text-primary font-bold mb-6 uppercase tracking-wider">Výroba od roku 1995</span>
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+                        Buňka, kterou si postavíte podle sebe.
+                    </h1>
+                    <p class="text-lg sm:text-xl text-gray-300 mb-10 leading-relaxed">
+                        Bytelná zateplená konstrukce zůstává stejná – vnitřek uděláme přesně podle toho, co potřebujete. Vyrábíme ve vlastní dílně ve Všestarech.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded font-bold text-lg text-center transition shadow-lg">
+                            Sestavit buňku online
+                        </a>
+                        <a href="#bunky" onclick="showPage('bunky')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded font-bold text-lg text-center transition">
+                            Prohlídka buňky
+                        </a>
                     </div>
                 </div>
             </header>
@@ -288,55 +275,6 @@
                             <h3 class="font-bold text-lg mb-2">Doprava zajištěna</h3>
                             <p class="text-sm text-gray-500">Hotovou buňku vám dovezeme až na stavbu a případně poradíme s usazením.</p>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3D prohlídka buňky -->
-            <section class="py-16 bg-dark text-white">
-                <div class="container mx-auto px-4 max-w-6xl">
-                    <div class="text-center mb-10">
-                        <span class="inline-block py-1 px-3 rounded bg-white/5 border border-primary text-xs text-primary font-bold mb-4 uppercase tracking-widest">Prohlídka buňky</span>
-                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Co si do buňky můžete navolit</h2>
-                        <p class="text-gray-400 max-w-2xl mx-auto">Konstrukce zůstává stejná – vnitřek uděláme podle toho, k čemu buňku potřebujete. Vyberte si a podívejte se dovnitř.</p>
-                    </div>
-
-                    <div class="grid lg:grid-cols-5 gap-8 lg:gap-10 items-start">
-
-                        <div class="lg:col-span-3">
-                            <div id="bunka-3d" class="model-plocha rounded-xl bg-gradient-to-b from-white/5 to-transparent border border-white/10">
-                                <div class="model-fallback">
-                                    <img src="images/galerie/10.jpg" alt="Stavební buňka" class="w-full h-full object-cover rounded-xl">
-                                </div>
-                            </div>
-                            <p class="text-xs text-gray-500 mt-3 text-center">Standardní provedení, vnější rozměr 4,5 × 2,5 × 2,6 m.</p>
-                        </div>
-
-                        <div class="lg:col-span-2">
-                            <div class="grid grid-cols-3 gap-2 mb-6" id="model-tabs">
-                                <button type="button" class="use-tab" data-use="kancelar" aria-pressed="true" onclick="selectUse('kancelar')">Kancelář</button>
-                                <button type="button" class="use-tab" data-use="satna" aria-pressed="false" onclick="selectUse('satna')">Šatna</button>
-                                <button type="button" class="use-tab" data-use="sklad" aria-pressed="false" onclick="selectUse('sklad')">Sklad</button>
-                            </div>
-
-                            <h3 class="text-xl font-bold mb-1" id="use-title">Kancelář a zázemí stavby</h3>
-                            <p class="text-sm text-gray-400 mb-5" id="use-subtitle">Zázemí pro stavbyvedoucího, kam se dá rovnou nastěhovat.</p>
-
-                            <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Můžete si navolit</p>
-                            <ul class="use-list space-y-2 mb-6" id="use-features">
-                                <li>Pracovní stůl a židle</li>
-                                <li>Skříňky a police</li>
-                                <li>Elektroinstalace 230 V, osvětlení a zásuvky</li>
-                                <li>Konvektor 2000 W pro celoroční provoz</li>
-                                <li>Nátěr a polep podle vaší firmy</li>
-                            </ul>
-
-                            <div class="flex flex-col sm:flex-row gap-3">
-                                <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold text-center transition">Sestavit buňku online</a>
-                                <a href="#bunky" onclick="showPage('bunky')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded font-bold text-center transition">Technický list</a>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </section>
@@ -406,6 +344,55 @@
                                 <h3 class="text-xl font-bold text-dark mb-2">+ Šatna</h3>
                                 <p class="text-gray-500 text-sm mb-4">Příplatek k základní buňce – vybavení pro šatnu a denní místnost pro vaše lidi.</p>
                                 <div class="text-right border-t border-gray-100 pt-4 font-bold text-xl">+17 200 Kč <span class="text-xs font-normal text-gray-400">bez DPH</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3D prohlídka buňky -->
+            <section class="py-16 bg-dark text-white">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="text-center mb-10">
+                        <span class="inline-block py-1 px-3 rounded bg-white/5 border border-primary text-xs text-primary font-bold mb-4 uppercase tracking-widest">Prohlídka buňky</span>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Co si do buňky můžete navolit</h2>
+                        <p class="text-gray-400 max-w-2xl mx-auto">Konstrukce zůstává stejná – vnitřek uděláme podle toho, k čemu buňku potřebujete. Vyberte si a podívejte se dovnitř.</p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-5 gap-8 lg:gap-10 items-start">
+
+                        <div class="lg:col-span-3">
+                            <div id="bunka-3d" class="model-plocha rounded-xl bg-gradient-to-b from-white/5 to-transparent border border-white/10">
+                                <div class="model-fallback">
+                                    <img src="images/galerie/10.jpg" alt="Stavební buňka" class="w-full h-full object-cover rounded-xl">
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-3 text-center">Standardní provedení, vnější rozměr 4,5 × 2,5 × 2,6 m.</p>
+                        </div>
+
+                        <div class="lg:col-span-2">
+                            <div class="grid grid-cols-3 gap-2 mb-6" id="model-tabs">
+                                <button type="button" class="use-tab" data-use="kancelar" aria-pressed="true" onclick="selectUse('kancelar')">Kancelář</button>
+                                <button type="button" class="use-tab" data-use="satna" aria-pressed="false" onclick="selectUse('satna')">Šatna</button>
+                                <button type="button" class="use-tab" data-use="sklad" aria-pressed="false" onclick="selectUse('sklad')">Sklad</button>
+                            </div>
+
+                            <h3 class="text-xl font-bold mb-1" id="use-title">Kancelář a zázemí stavby</h3>
+                            <p class="text-sm text-gray-400 mb-5" id="use-subtitle">Zázemí pro stavbyvedoucího, kam se dá rovnou nastěhovat.</p>
+
+                            <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Můžete si navolit</p>
+                            <ul class="use-list space-y-2 mb-6" id="use-features">
+                                <li>Pracovní stůl a židle</li>
+                                <li>Skříňky a police</li>
+                                <li>Elektroinstalace 230 V, osvětlení a zásuvky</li>
+                                <li>Konvektor 2000 W pro celoroční provoz</li>
+                                <li>Nátěr a polep podle vaší firmy</li>
+                            </ul>
+
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold text-center transition">Sestavit buňku online</a>
+                                <a href="#bunky" onclick="showPage('bunky')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded font-bold text-center transition">Technický list</a>
                             </div>
                         </div>
 
@@ -500,6 +487,17 @@
                         <img src="images/bunky/bunka-zima.jpg" alt="Buňky s firemním polepem" class="rounded-xl h-64 w-full object-cover shadow-md">
                         <img src="images/galerie/IMG_9681-1.jpg" alt="Buňka s polepem firmy zákazníka" class="rounded-xl h-64 w-full object-cover shadow-md">
                     </div>
+                </div>
+            </section>
+
+            <!-- Výzva do konfigurátoru -->
+            <section class="py-16 bg-dark text-white">
+                <div class="container mx-auto px-4 max-w-3xl text-center">
+                    <h2 class="text-3xl font-bold mb-4">Sestavte si buňku podle svých potřeb</h2>
+                    <p class="text-gray-400 mb-8">Odpovězte na pár otázek a obratem vám připravíme nezávaznou cenovou kalkulaci na míru.</p>
+                    <a href="#konfigurator" onclick="showPage('konfigurator')" class="inline-block bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded font-bold text-lg transition shadow-lg">
+                        Sestavit buňku online
+                    </a>
                 </div>
             </section>
         </div>

@@ -20,10 +20,12 @@
 
     // Pár hlavních výhod, ukotvených na místo, kde na buňce jsou.
     const VYHODY = [
-        { popis: 'KINGSPAN 40 mm',   bod: [-1.85, 2.0, 1.28] },
-        { popis: 'Mříž v okně',      bod: [1.0, 1.78, 1.32] },
-        { popis: 'Bezpečnostní zámek', bod: [-0.5, 1.15, 1.32] },
-        { popis: 'Rám IPE 120',      bod: [-1.9, 0.06, 1.28] }
+        // Rozprostřené po délce buňky – při pohledu shora se popisky
+        // s podobnou výškou překrývají, rozlišuje je až poloha v ose X.
+        { popis: 'KINGSPAN 40 mm',     bod: [-2.15, 1.9, 1.28] },
+        { popis: 'Bezpečnostní zámek', bod: [-0.85, 1.5, 1.32] },
+        { popis: 'Mříž v okně',        bod: [1.0, 1.6, 1.32] },
+        { popis: 'Rám IPE 120',        bod: [2.1, 0.06, 1.28] }
     ];
 
     // Model se neotáčí – díváme se na něj pořád ze stejného rohu. Úhel je
@@ -32,8 +34,8 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-    camera.position.set(0, 2.1, 8.6);
-    camera.lookAt(0, 0, 0);
+    camera.position.set(0, 9.4, 7.4);
+    camera.lookAt(0, 0.5, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -82,7 +84,10 @@
     // --- Konstrukce ---------------------------------------------------------
     kvadr(D.delka, 0.12, D.sirka, BARVA.ram, 0, 0.06, 0);                       // rám IPE 120
     kvadr(D.delka - 0.1, 0.04, D.sirka - 0.1, BARVA.podlaha, 0, 0.14, 0, false); // podlaha / lino
-    kvadr(D.delka + 0.1, 0.09, D.sirka + 0.1, BARVA.strecha, 0, 2.56, 0);        // trapézová střecha
+
+    // Střecha je samostatný díl – při pohledu dovnitř se nadzvedne.
+    const strecha = new THREE.Group();
+    bunka.add(strecha);
 
     const vyskaSteny = 2.4;
     const stredSteny = 0.12 + vyskaSteny / 2;
@@ -117,12 +122,26 @@
         bunka.add(prave);
     }
 
-    // Trapézové vlny na střeše
+    // Střešní panel s trapézovými vlnami
+    const deskaStrechy = new THREE.Mesh(
+        new THREE.BoxGeometry(D.delka + 0.1, 0.09, D.sirka + 0.1),
+        hmota(BARVA.strecha)
+    );
+    deskaStrechy.position.y = 2.56;
+    strecha.add(deskaStrechy);
+
+    const hranyStrechy = new THREE.LineSegments(
+        new THREE.EdgesGeometry(deskaStrechy.geometry),
+        new THREE.LineBasicMaterial({ color: 0x1e293b, transparent: true, opacity: 0.35 })
+    );
+    hranyStrechy.position.copy(deskaStrechy.position);
+    strecha.add(hranyStrechy);
+
     const trapez = new THREE.MeshStandardMaterial({ color: 0x9aa2aa, roughness: 0.85, metalness: 0.1 });
     for (let x = -D.delka / 2; x < D.delka / 2; x += 0.22) {
         const vlna = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.03, D.sirka + 0.08), trapez);
         vlna.position.set(x, 2.62, 0);
-        bunka.add(vlna);
+        strecha.add(vlna);
     }
 
     [-1, 1].forEach(sx => [-1, 1].forEach(sz => {
@@ -161,22 +180,37 @@
         skupina.add(mesh);
     }
 
-    // Vybavení stavíme do poloviny u otevřeného čela, jinak by ho zakryla stěna.
-    // Kancelář: stůl, židle, skříňka
-    blok(vybaveni.kancelar, 1.5, 0.07, 0.7, BARVA.nabytek, 0.9, 0.78, -0.72);
-    blok(vybaveni.kancelar, 0.08, 0.62, 0.08, BARVA.ram, 0.25, 0.45, -0.72);
-    blok(vybaveni.kancelar, 0.08, 0.62, 0.08, BARVA.ram, 1.55, 0.45, -0.72);
-    blok(vybaveni.kancelar, 0.5, 0.07, 0.5, BARVA.ram, 0.9, 0.48, 0.15);
-    blok(vybaveni.kancelar, 0.5, 0.55, 0.07, BARVA.ram, 0.9, 0.78, 0.38);
-    blok(vybaveni.kancelar, 0.75, 1.7, 0.42, BARVA.nabytek, 1.85, 1.02, 0.85);
+    // Kancelář: psací stůl se židlí, skříň a odkládací stolek
+    blok(vybaveni.kancelar, 1.6, 0.07, 0.7, BARVA.nabytek, -1.2, 0.78, -0.72);
+    blok(vybaveni.kancelar, 0.08, 0.62, 0.08, BARVA.ram, -1.9, 0.45, -0.72);
+    blok(vybaveni.kancelar, 0.08, 0.62, 0.08, BARVA.ram, -0.5, 0.45, -0.72);
+    blok(vybaveni.kancelar, 0.5, 0.07, 0.5, BARVA.ram, -1.2, 0.48, 0.2);
+    blok(vybaveni.kancelar, 0.5, 0.5, 0.07, BARVA.ram, -1.2, 0.76, 0.42);
+    blok(vybaveni.kancelar, 0.8, 1.7, 0.42, BARVA.nabytek, 1.8, 1.02, -0.85);
+    blok(vybaveni.kancelar, 1.1, 0.07, 0.55, BARVA.nabytek, 0.7, 0.72, 0.75);
+    blok(vybaveni.kancelar, 0.08, 0.58, 0.08, BARVA.ram, 0.25, 0.43, 0.75);
+    blok(vybaveni.kancelar, 0.08, 0.58, 0.08, BARVA.ram, 1.15, 0.43, 0.75);
 
-    // Šatna: skříně a lavice
-    for (let i = 0; i < 4; i++) {
-        blok(vybaveni.satna, 0.42, 1.8, 0.5, BARVA.skrin, 0.35 + i * 0.5, 1.07, -0.85);
+    // Šatna: řada skříní a lavice proti nim
+    for (let i = 0; i < 6; i++) {
+        blok(vybaveni.satna, 0.42, 1.8, 0.5, BARVA.skrin, -1.75 + i * 0.72, 1.07, -0.85);
     }
-    blok(vybaveni.satna, 1.8, 0.08, 0.36, BARVA.nabytek, 1.1, 0.5, 0.55);
-    blok(vybaveni.satna, 0.08, 0.34, 0.34, BARVA.ram, 0.35, 0.31, 0.55);
-    blok(vybaveni.satna, 0.08, 0.34, 0.34, BARVA.ram, 1.85, 0.31, 0.55);
+    blok(vybaveni.satna, 3.4, 0.08, 0.36, BARVA.nabytek, 0, 0.5, 0.75);
+    [-1.5, 0, 1.5].forEach(x => {
+        blok(vybaveni.satna, 0.08, 0.34, 0.34, BARVA.ram, x, 0.31, 0.75);
+    });
+
+    // Sklad: police podél obou podélných stěn
+    [-1.15, 1.15].forEach(x => {
+        [0.55, 1.2, 1.85].forEach(y => {
+            blok(vybaveni.sklad, 2.0, 0.05, 0.45, BARVA.nabytek, x, y, -0.9);
+        });
+        [-0.95, 0.95].forEach(dx => {
+            blok(vybaveni.sklad, 0.06, 1.75, 0.45, BARVA.ram, x + dx, 1.05, -0.9);
+        });
+    });
+    blok(vybaveni.sklad, 1.8, 0.05, 0.4, BARVA.nabytek, 1.2, 0.6, 0.85);
+    blok(vybaveni.sklad, 1.8, 0.05, 0.4, BARVA.nabytek, 1.2, 1.25, 0.85);
 
     // --- Šipky s popisky ----------------------------------------------------
     const vrstva = document.createElement('div');
@@ -209,12 +243,11 @@
     bunka.rotation.y = UHEL;
     bunka.updateMatrixWorld();
 
-    let cilovaPruhlednost = 1;
+    let cilovaPruhlednost = 0;
+    let cileneZvednuti = 1.6;
 
     function nastavVyuziti(klic) {
-        Object.keys(vybaveni).forEach(k => { vybaveni[k].visible = k === klic && k !== 'sklad'; });
-        // U prázdného skladu není do čeho koukat, čelo tedy necháme celé.
-        cilovaPruhlednost = klic === 'sklad' ? 1 : 0;
+        Object.keys(vybaveni).forEach(k => { vybaveni[k].visible = k === klic; });
     }
 
     // --- Smyčka -------------------------------------------------------------
@@ -253,6 +286,13 @@
             drazkaRez.opacity = celoRez.material.opacity;
         }
 
+        const zvednuti = cileneZvednuti - strecha.position.y;
+        if (Math.abs(zvednuti) > 0.002) {
+            strecha.position.y += zvednuti * 0.1;
+            // Střecha zároveň odjíždí dozadu, jinak by shora zakrývala vnitřek.
+            strecha.position.z = -2.1 * (strecha.position.y / cileneZvednuti);
+        }
+
         prekresliHotspoty(sirka, vyska);
         renderer.render(scene, camera);
     }
@@ -267,4 +307,6 @@
     nastavVyuziti(zvolene ? zvolene.dataset.use : 'kancelar');
     celoRez.material.opacity = cilovaPruhlednost;
     drazkaRez.opacity = cilovaPruhlednost;
+    strecha.position.y = cileneZvednuti;
+    strecha.position.z = -2.1;
 })();
