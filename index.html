@@ -37,6 +37,47 @@
         .conf-option:hover { border-color: #f97316; background-color: #fff7ed; }
         .conf-option.selected { border-color: #f97316; background-color: #fff7ed; border-width: 2px; }
         .conf-checkbox.selected { background-color: #f97316; color: white; border-color: #f97316; }
+
+        /* Hero – mini-konfigurátor */
+        .use-tab {
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
+            color: #cbd5e1;
+            border-radius: 0.5rem;
+            padding: 0.6rem 0.25rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .use-tab:hover { border-color: #f97316; color: #fff; }
+        .use-tab[aria-pressed="true"] {
+            background: #f97316;
+            border-color: #f97316;
+            color: #fff;
+        }
+        .use-media { transition: opacity 0.25s ease; }
+        .use-media.is-swapping { opacity: 0; }
+        .use-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .use-list li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #f97316;
+            font-size: 0.75rem;
+            top: 0.2em;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .use-media { transition: none; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans flex flex-col min-h-screen pb-16 md:pb-0">
@@ -94,28 +135,65 @@
         
         <!-- ================= STRÁNKA: ÚVOD ================= -->
         <div id="page-uvod" class="page-section active">
-            <!-- Hero Sekce -->
-            <header class="relative bg-dark text-white">
-                <div class="absolute inset-0 z-0 opacity-40 bg-cover bg-center" style="background-image: url('images/bunky/bunka-11.jpg');"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-darker to-transparent z-0"></div>
-                
-                <div class="container mx-auto px-4 py-32 md:py-48 relative z-10 max-w-6xl">
-                    <div class="max-w-2xl">
-                        <span class="inline-block py-1 px-3 rounded bg-gray-800 border border-primary text-sm text-primary font-bold mb-4 uppercase tracking-wider">Výroba od roku 1995</span>
-                        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
-                            Spolehlivé stavební buňky, které vydrží.
-                        </h1>
-                        <p class="text-xl text-gray-300 mb-10 leading-relaxed">
-                            Od základních šaten až po zateplené kanceláře. Vyrábíme na míru v ČR a garantujeme kvalitu od roku 1995.
-                        </p>
-                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                            <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded font-bold text-lg text-center transition flex items-center justify-center shadow-lg">
-                                Sestavit buňku online
-                            </a>
-                            <a href="#bunky" onclick="showPage('bunky')" class="bg-white hover:bg-gray-100 text-dark px-8 py-4 rounded font-bold text-lg text-center transition">
-                                Prohlédnout typová řešení
-                            </a>
+            <!-- Hero Sekce – živý mini-konfigurátor -->
+            <header class="relative bg-dark text-white overflow-hidden">
+                <div class="absolute inset-0 z-0 bg-cover bg-center opacity-25" style="background-image: url('images/bunky/bunka-11.jpg');"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-darker via-darker/90 to-dark/70 z-0"></div>
+
+                <div class="container mx-auto px-4 py-16 md:py-24 relative z-10 max-w-6xl">
+                    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+                        <div>
+                            <span class="inline-block py-1 px-3 rounded bg-gray-800 border border-primary text-sm text-primary font-bold mb-4 uppercase tracking-wider">Výroba od roku 1995</span>
+                            <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-6">
+                                Buňka, kterou si postavíte podle sebe.
+                            </h1>
+                            <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                                Bytelná zateplená konstrukce zůstává stejná – vnitřek uděláme přesně podle toho, co potřebujete. Vyrábíme ve vlastní dílně ve Všestarech od roku 1995.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded font-bold text-lg text-center transition shadow-lg">
+                                    Sestavit buňku online
+                                </a>
+                                <a href="#realizace" onclick="showPage('realizace')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded font-bold text-lg text-center transition">
+                                    Prohlédnout realizace
+                                </a>
+                            </div>
                         </div>
+
+                        <!-- Mini-konfigurátor -->
+                        <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 sm:p-6 shadow-2xl">
+                            <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">K čemu ji budete potřebovat?</p>
+
+                            <div class="grid grid-cols-3 gap-2 mb-5" id="use-tabs">
+                                <button type="button" class="use-tab" data-use="kancelar" aria-pressed="true" onclick="selectUse('kancelar')">Kancelář</button>
+                                <button type="button" class="use-tab" data-use="satna" aria-pressed="false" onclick="selectUse('satna')">Šatna</button>
+                                <button type="button" class="use-tab" data-use="sklad" aria-pressed="false" onclick="selectUse('sklad')">Sklad</button>
+                            </div>
+
+                            <div class="rounded-xl overflow-hidden bg-dark mb-5 aspect-[4/3]">
+                                <img id="use-image" src="images/bunky/kancelar.jpg" alt="Buňka vybavená jako kancelář" class="use-media w-full h-full object-cover">
+                            </div>
+
+                            <ul class="use-list space-y-2 mb-5" id="use-features">
+                                <li>Pracovní stůl, židle a skříňky</li>
+                                <li>Elektroinstalace 230 V a osvětlení</li>
+                                <li>Konvektor 2000 W pro celoroční provoz</li>
+                            </ul>
+
+                            <div class="border-t border-white/10 pt-4 flex items-end justify-between gap-4">
+                                <div>
+                                    <p class="text-xs text-gray-400" id="use-price-detail">Základ 112 200 + vybavení 26 800 Kč</p>
+                                    <p class="text-2xl font-black text-white" id="use-price">139 000 Kč <span class="text-xs font-normal text-gray-400">bez DPH</span></p>
+                                </div>
+                                <button type="button" onclick="continueToConfigurator()" class="bg-primary hover:bg-primaryHover text-white px-5 py-3 rounded font-bold transition whitespace-nowrap">
+                                    Upravit <i class="fa-solid fa-arrow-right ml-1"></i>
+                                </button>
+                            </div>
+
+                            <p class="text-xs text-gray-400 mt-4">Potřebujete sanitární buňku nebo atypické řešení? <button type="button" onclick="showPage('konfigurator')" class="text-primary hover:underline font-medium">Sestavte si ji v konfigurátoru</button>.</p>
+                        </div>
+
                     </div>
                 </div>
             </header>
@@ -870,6 +948,75 @@
             try { souhlas = localStorage.getItem('dosel-cookies'); } catch (e) {}
             if (souhlas !== 'ok') document.getElementById('cookie-bar').style.display = 'block';
         };
+
+        // Hero: mini-konfigurátor. Ceny odpovídají ceníku (základ + příplatek za vybavení).
+        const USE_VARIANTS = {
+            kancelar: {
+                image: 'images/bunky/kancelar.jpg',
+                alt: 'Buňka vybavená jako kancelář',
+                features: ['Pracovní stůl, židle a skříňky', 'Elektroinstalace 230 V a osvětlení', 'Konvektor 2000 W pro celoroční provoz'],
+                priceDetail: 'Základ 112 200 + vybavení 26 800 Kč',
+                price: '139 000 Kč',
+                configuratorOption: 'Kancelář / Zázemí'
+            },
+            satna: {
+                image: 'images/bunky/satna.webp',
+                alt: 'Buňka vybavená jako šatna se skříňkami',
+                features: ['Šatní skříně a lavice', 'Věšáky a odkládací plochy', 'Vytápění pro sušení oděvů'],
+                priceDetail: 'Základ 112 200 + vybavení 17 200 Kč',
+                price: '129 400 Kč',
+                configuratorOption: 'Šatna / Denní místnost'
+            },
+            sklad: {
+                image: 'images/bunky/interier.jpg',
+                alt: 'Základní provedení buňky pro skladování',
+                features: ['Zateplené opláštění KINGSPAN 40 mm', 'Dveře s bezpečnostním kováním CONEX R4', 'Okno 900 × 900 mm s pevnou mříží'],
+                priceDetail: 'Základní provedení s elektroinstalací',
+                price: '112 200 Kč',
+                configuratorOption: 'Sklad materiálu'
+            }
+        };
+
+        let activeUse = 'kancelar';
+
+        function selectUse(key) {
+            const variant = USE_VARIANTS[key];
+            if (!variant || key === activeUse) return;
+            activeUse = key;
+
+            document.querySelectorAll('#use-tabs .use-tab').forEach(tab => {
+                tab.setAttribute('aria-pressed', String(tab.dataset.use === key));
+            });
+
+            const image = document.getElementById('use-image');
+            image.classList.add('is-swapping');
+
+            setTimeout(() => {
+                image.src = variant.image;
+                image.alt = variant.alt;
+                image.classList.remove('is-swapping');
+            }, 200);
+
+            document.getElementById('use-features').innerHTML =
+                variant.features.map(f => '<li>' + f + '</li>').join('');
+            document.getElementById('use-price-detail').textContent = variant.priceDetail;
+            document.getElementById('use-price').innerHTML =
+                variant.price + ' <span class="text-xs font-normal text-gray-400">bez DPH</span>';
+        }
+
+        // Přenese volbu z hera do konfigurátoru, ať zákazník nezačíná znovu
+        function continueToConfigurator() {
+            const label = USE_VARIANTS[activeUse].configuratorOption;
+            showPage('konfigurator');
+
+            const option = Array.from(document.querySelectorAll('#step-1 .conf-option'))
+                .find(el => el.textContent.trim() === label);
+
+            if (option) {
+                selectSingleOption('step-1', option);
+                nextStep(2);
+            }
+        }
 
         // Mobilní menu
         function toggleMobileMenu() {
