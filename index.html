@@ -78,6 +78,89 @@
         @media (prefers-reduced-motion: reduce) {
             .use-media { transition: none; }
         }
+
+        /* 3D model buňky */
+        .model-plocha {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            touch-action: pan-y;
+            overflow: hidden;
+        }
+        .model-plocha.is-ready { overflow: visible; }
+        .model-plocha.is-ready .model-fallback { display: none; }
+        .model-fallback { position: absolute; inset: 0; }
+        .model-hotspots { position: absolute; inset: 0; pointer-events: none; }
+
+        .hotspot {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .hotspot.is-visible { opacity: 1; }
+        .hotspot.is-left { flex-direction: row-reverse; }
+        .hotspot-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 9999px;
+            background: #f97316;
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.25);
+            flex-shrink: 0;
+        }
+        .hotspot-label {
+            white-space: nowrap;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fff;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(249, 115, 22, 0.4);
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+        }
+        .hotspot.is-active .hotspot-label { background: #f97316; border-color: #f97316; }
+        .hotspot.is-active .hotspot-dot { box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.35); }
+
+        @media (max-width: 639px) {
+            .hotspot-label { font-size: 0.62rem; padding: 0.2rem 0.45rem; }
+        }
+
+        /* Seznam materiálů */
+        .cast {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid transparent;
+            background: transparent;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .cast:hover { background: rgba(255, 255, 255, 0.05); }
+        .cast.is-active {
+            background: rgba(249, 115, 22, 0.12);
+            border-color: rgba(249, 115, 22, 0.5);
+        }
+        .cast-nazev {
+            display: block;
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.95rem;
+            margin-bottom: 0.15rem;
+        }
+        .cast-popis {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+        .cast.is-active .cast-nazev { color: #f97316; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans flex flex-col min-h-screen pb-16 md:pb-0">
@@ -161,37 +244,12 @@
                             </div>
                         </div>
 
-                        <!-- Mini-konfigurátor -->
-                        <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 sm:p-6 shadow-2xl">
-                            <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">K čemu ji budete potřebovat?</p>
-
-                            <div class="grid grid-cols-3 gap-2 mb-5" id="use-tabs">
-                                <button type="button" class="use-tab" data-use="kancelar" aria-pressed="true" onclick="selectUse('kancelar')">Kancelář</button>
-                                <button type="button" class="use-tab" data-use="satna" aria-pressed="false" onclick="selectUse('satna')">Šatna</button>
-                                <button type="button" class="use-tab" data-use="sklad" aria-pressed="false" onclick="selectUse('sklad')">Sklad</button>
+                        <div class="relative">
+                            <img src="images/galerie/10.jpg" alt="Stavební buňka z výroby Zámečnictví Došel" class="rounded-2xl shadow-2xl w-full object-cover aspect-[4/3]">
+                            <div class="absolute -bottom-5 -left-4 sm:left-6 bg-white text-dark rounded-xl shadow-xl px-5 py-3">
+                                <p class="text-xs text-gray-500 font-medium">Cena od</p>
+                                <p class="text-xl font-black">112 200 Kč <span class="text-xs font-normal text-gray-400 whitespace-nowrap">bez DPH</span></p>
                             </div>
-
-                            <div class="rounded-xl overflow-hidden bg-dark mb-5 aspect-[4/3]">
-                                <img id="use-image" src="images/bunky/kancelar.jpg" alt="Buňka vybavená jako kancelář" class="use-media w-full h-full object-cover">
-                            </div>
-
-                            <ul class="use-list space-y-2 mb-5" id="use-features">
-                                <li>Pracovní stůl, židle a skříňky</li>
-                                <li>Elektroinstalace 230 V a osvětlení</li>
-                                <li>Konvektor 2000 W pro celoroční provoz</li>
-                            </ul>
-
-                            <div class="border-t border-white/10 pt-4 flex items-end justify-between gap-4">
-                                <div>
-                                    <p class="text-xs text-gray-400" id="use-price-detail">Základ 112 200 + vybavení 26 800 Kč</p>
-                                    <p class="text-2xl font-black text-white" id="use-price">139 000 Kč <span class="text-xs font-normal text-gray-400">bez DPH</span></p>
-                                </div>
-                                <button type="button" onclick="continueToConfigurator()" class="bg-primary hover:bg-primaryHover text-white px-5 py-3 rounded font-bold transition whitespace-nowrap">
-                                    Upravit <i class="fa-solid fa-arrow-right ml-1"></i>
-                                </button>
-                            </div>
-
-                            <p class="text-xs text-gray-400 mt-4">Potřebujete sanitární buňku nebo atypické řešení? <button type="button" onclick="showPage('konfigurator')" class="text-primary hover:underline font-medium">Sestavte si ji v konfigurátoru</button>.</p>
                         </div>
 
                     </div>
@@ -230,6 +288,55 @@
                             <h3 class="font-bold text-lg mb-2">Doprava zajištěna</h3>
                             <p class="text-sm text-gray-500">Hotovou buňku vám dovezeme až na stavbu a případně poradíme s usazením.</p>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3D prohlídka buňky -->
+            <section class="py-16 bg-dark text-white">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="text-center mb-10">
+                        <span class="inline-block py-1 px-3 rounded bg-white/5 border border-primary text-xs text-primary font-bold mb-4 uppercase tracking-widest">Prohlídka buňky</span>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Co si do buňky můžete navolit</h2>
+                        <p class="text-gray-400 max-w-2xl mx-auto">Konstrukce zůstává stejná – vnitřek uděláme podle toho, k čemu buňku potřebujete. Vyberte si a podívejte se dovnitř.</p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-5 gap-8 lg:gap-10 items-start">
+
+                        <div class="lg:col-span-3">
+                            <div id="bunka-3d" class="model-plocha rounded-xl bg-gradient-to-b from-white/5 to-transparent border border-white/10">
+                                <div class="model-fallback">
+                                    <img src="images/galerie/10.jpg" alt="Stavební buňka" class="w-full h-full object-cover rounded-xl">
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-3 text-center">Standardní provedení, vnější rozměr 4,5 × 2,5 × 2,6 m.</p>
+                        </div>
+
+                        <div class="lg:col-span-2">
+                            <div class="grid grid-cols-3 gap-2 mb-6" id="model-tabs">
+                                <button type="button" class="use-tab" data-use="kancelar" aria-pressed="true" onclick="selectUse('kancelar')">Kancelář</button>
+                                <button type="button" class="use-tab" data-use="satna" aria-pressed="false" onclick="selectUse('satna')">Šatna</button>
+                                <button type="button" class="use-tab" data-use="sklad" aria-pressed="false" onclick="selectUse('sklad')">Sklad</button>
+                            </div>
+
+                            <h3 class="text-xl font-bold mb-1" id="use-title">Kancelář a zázemí stavby</h3>
+                            <p class="text-sm text-gray-400 mb-5" id="use-subtitle">Zázemí pro stavbyvedoucího, kam se dá rovnou nastěhovat.</p>
+
+                            <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Můžete si navolit</p>
+                            <ul class="use-list space-y-2 mb-6" id="use-features">
+                                <li>Pracovní stůl a židle</li>
+                                <li>Skříňky a police</li>
+                                <li>Elektroinstalace 230 V, osvětlení a zásuvky</li>
+                                <li>Konvektor 2000 W pro celoroční provoz</li>
+                                <li>Nátěr a polep podle vaší firmy</li>
+                            </ul>
+
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <a href="#konfigurator" onclick="showPage('konfigurator')" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded font-bold text-center transition">Sestavit buňku online</a>
+                                <a href="#bunky" onclick="showPage('bunky')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded font-bold text-center transition">Technický list</a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
@@ -949,31 +1056,40 @@
             if (souhlas !== 'ok') document.getElementById('cookie-bar').style.display = 'block';
         };
 
-        // Hero: mini-konfigurátor. Ceny odpovídají ceníku (základ + příplatek za vybavení).
+        // Vybavení buňky podle využití – vychází z nabídky "vybavení za příplatek".
         const USE_VARIANTS = {
             kancelar: {
-                image: 'images/bunky/kancelar.jpg',
-                alt: 'Buňka vybavená jako kancelář',
-                features: ['Pracovní stůl, židle a skříňky', 'Elektroinstalace 230 V a osvětlení', 'Konvektor 2000 W pro celoroční provoz'],
-                priceDetail: 'Základ 112 200 + vybavení 26 800 Kč',
-                price: '139 000 Kč',
-                configuratorOption: 'Kancelář / Zázemí'
+                title: 'Kancelář a zázemí stavby',
+                subtitle: 'Zázemí pro stavbyvedoucího, kam se dá rovnou nastěhovat.',
+                features: [
+                    'Pracovní stůl a židle',
+                    'Skříňky a police',
+                    'Elektroinstalace 230 V, osvětlení a zásuvky',
+                    'Konvektor 2000 W pro celoroční provoz',
+                    'Nátěr a polep podle vaší firmy'
+                ]
             },
             satna: {
-                image: 'images/bunky/satna.webp',
-                alt: 'Buňka vybavená jako šatna se skříňkami',
-                features: ['Šatní skříně a lavice', 'Věšáky a odkládací plochy', 'Vytápění pro sušení oděvů'],
-                priceDetail: 'Základ 112 200 + vybavení 17 200 Kč',
-                price: '129 400 Kč',
-                configuratorOption: 'Šatna / Denní místnost'
+                title: 'Šatna a denní místnost',
+                subtitle: 'Zázemí pro partu, kde se lidé převléknou a usuší si věci.',
+                features: [
+                    'Šatní skříně',
+                    'Lavice, stoly a věšáky',
+                    'Konvektor 2000 W pro sušení oděvů',
+                    'Elektroinstalace 230 V, osvětlení a zásuvky',
+                    'Nátěr a polep podle vaší firmy'
+                ]
             },
             sklad: {
-                image: 'images/bunky/interier.jpg',
-                alt: 'Základní provedení buňky pro skladování',
-                features: ['Zateplené opláštění KINGSPAN 40 mm', 'Dveře s bezpečnostním kováním CONEX R4', 'Okno 900 × 900 mm s pevnou mříží'],
-                priceDetail: 'Základní provedení s elektroinstalací',
-                price: '112 200 Kč',
-                configuratorOption: 'Sklad materiálu'
+                title: 'Sklad materiálu a nářadí',
+                subtitle: 'Základní provedení – uzamykatelná zateplená schránka na stavbě.',
+                features: [
+                    'Bezpečnostní zámky a výbava',
+                    'Pevná mříž v okně',
+                    'Police podle potřeby',
+                    'Elektroinstalace 230 V a osvětlení',
+                    'Nátěr a polep podle vaší firmy'
+                ]
             }
         };
 
@@ -984,38 +1100,16 @@
             if (!variant || key === activeUse) return;
             activeUse = key;
 
-            document.querySelectorAll('#use-tabs .use-tab').forEach(tab => {
+            document.querySelectorAll('.use-tab').forEach(tab => {
                 tab.setAttribute('aria-pressed', String(tab.dataset.use === key));
             });
 
-            const image = document.getElementById('use-image');
-            image.classList.add('is-swapping');
+            if (window.bunkaModel) window.bunkaModel.nastavVyuziti(key);
 
-            setTimeout(() => {
-                image.src = variant.image;
-                image.alt = variant.alt;
-                image.classList.remove('is-swapping');
-            }, 200);
-
+            document.getElementById('use-title').textContent = variant.title;
+            document.getElementById('use-subtitle').textContent = variant.subtitle;
             document.getElementById('use-features').innerHTML =
                 variant.features.map(f => '<li>' + f + '</li>').join('');
-            document.getElementById('use-price-detail').textContent = variant.priceDetail;
-            document.getElementById('use-price').innerHTML =
-                variant.price + ' <span class="text-xs font-normal text-gray-400">bez DPH</span>';
-        }
-
-        // Přenese volbu z hera do konfigurátoru, ať zákazník nezačíná znovu
-        function continueToConfigurator() {
-            const label = USE_VARIANTS[activeUse].configuratorOption;
-            showPage('konfigurator');
-
-            const option = Array.from(document.querySelectorAll('#step-1 .conf-option'))
-                .find(el => el.textContent.trim() === label);
-
-            if (option) {
-                selectSingleOption('step-1', option);
-                nextStep(2);
-            }
         }
 
         // Mobilní menu
@@ -1160,5 +1254,8 @@
             window.location.href = 'mailto:dosel@centrum.cz?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
         }
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.140.2/three.min.js" defer></script>
+    <script src="js/bunka-3d.js" defer></script>
 </body>
 </html>
